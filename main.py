@@ -43,7 +43,6 @@ def main() -> None:
     for index, file in enumerate(FILES):
         print(f'File #{index+1}: {file}')
         # If line is empty, skip it
-        print(os.path.getsize(file))
         if os.environ.get('SKIP_EMPTY_FILES').upper() == 'TRUE' and os.path.getsize(file) == 0:
             print('FILE IS EMPTY. SKIPPING.')
             continue
