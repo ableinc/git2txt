@@ -35,7 +35,7 @@ def main() -> None:
     get_file_path()
     # Verify if files were found
     if len(FILES) == 0:
-        print(f"No files found in in git directory: {os.environ.get('GIT_PROJECT_DIRECTORY')}")
+        print(f"No files found in git directory: {os.environ.get('GIT_PROJECT_DIRECTORY')}")
         sys.exit(1)
     print(f'File count: {len(FILES)}')
     # Build TXT
@@ -47,10 +47,10 @@ def main() -> None:
             print('FILE IS EMPTY. SKIPPING.')
             continue
         with open(file, mode='r', encoding='utf-8') as git_file:
-            md5_hash = hashlib.md5(git_file.read().encode('utf-8')).hexdigest()
-            git_file.seek(0)
+            file_content = git_file.read()
+            sha256_hash = hashlib.sha256(file_content.encode('utf-8')).hexdigest()
             file_name = os.path.basename(file)
-            write_txt(txt_data=git_file.read(), file_name=file_name, md5_hash=md5_hash)
+            write_txt(txt_data=file_content, file_name=file_name, md5_hash=sha256_hash)
 
 
 
