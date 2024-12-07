@@ -25,7 +25,7 @@ def get_file_path() -> None:
 
 def write_txt(txt_data: str, file_name: str, md5_hash: str) -> None:
     full_path = os.path.join(save_directory, file_name + f'_{md5_hash}.txt')
-    with open(full_path, mode='w') as data:
+    with open(full_path, mode='w', encoding='utf-8') as data:
         data.write(txt_data)
     print(f'TXT written to: {full_path}')
 
@@ -35,7 +35,7 @@ def main() -> None:
     get_file_path()
     # Verify if files were found
     if len(FILES) == 0:
-        print(f"No files found in in git directory: {os.environ.get('GIT_PROJECT_DIRECTORY')}")
+        print(f"No files found in git directory: {os.environ.get('GIT_PROJECT_DIRECTORY')}")
         sys.exit(1)
     print(f'File count: {len(FILES)}')
     # Build TXT
@@ -47,10 +47,10 @@ def main() -> None:
             print('FILE IS EMPTY. SKIPPING.')
             continue
         with open(file, mode='r', encoding='utf-8') as git_file:
-            md5_hash = hashlib.md5(git_file.read().encode('utf-8')).hexdigest()
-            git_file.seek(0)
+            file_content = git_file.read()  # Read file content once
+            md5_hash = hashlib.md5(file_content.encode('utf-8')).hexdigest()  # Use the content for hashing
             file_name = os.path.basename(file)
-            write_txt(txt_data=git_file.read(), file_name=file_name, md5_hash=md5_hash)
+            write_txt(txt_data=file_content, file_name=file_name, md5_hash=md5_hash)  # Reuse the content
 
 
 
