@@ -47,10 +47,10 @@ def main() -> None:
             print('FILE IS EMPTY. SKIPPING.')
             continue
         with open(file, mode='r', encoding='utf-8') as git_file:
-            file_content = git_file.read()
-            sha256_hash = hashlib.sha256(file_content.encode('utf-8')).hexdigest()
+            file_content = git_file.read()  # Read file content once
+            md5_hash = hashlib.md5(file_content.encode('utf-8')).hexdigest()  # Use the content for hashing
             file_name = os.path.basename(file)
-            write_txt(txt_data=file_content, file_name=file_name, md5_hash=sha256_hash)
+            write_txt(txt_data=file_content, file_name=file_name, md5_hash=md5_hash)  # Reuse the content
 
 
 
