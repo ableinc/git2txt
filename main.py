@@ -25,7 +25,7 @@ def get_file_path() -> None:
 
 def write_txt(txt_data: str, file_name: str, md5_hash: str) -> None:
     full_path = os.path.join(save_directory, file_name + f'_{md5_hash}.txt')
-    with open(full_path, mode='w') as data:
+    with open(full_path, mode='w', encoding='utf-8') as data:
         data.write(txt_data)
     print(f'TXT written to: {full_path}')
 
